@@ -1,64 +1,271 @@
+/* ==========================================================================
+   RESET E CONFIGURAÇÕES GERAIS DE CORES
+   ========================================================================== */
 body {
-    background: #0f172a;
+    background-color: #0f172a;
     color: #f1f5f9;
-    display: flex;
-    min-height: 100vh;
+    margin: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
-.bem-sidebar {
-    width: 260px;
+/* ==========================================================================
+   CABEÇALHO GLOBAL (TOPBAR)
+   ========================================================================== */
+.bem-topbar {
     background-color: #1e293b;
-    border-right: 1px solid #334155;
+    border-bottom: 1px solid #334155;
+    padding: 0 24px;
     display: flex;
-    flex-direction: column;
-    padding: var(--bem-spacing-lg);
+    align-items: center;
+    justify-content: space-between;
     position: fixed;
     top: 0;
-    bottom: 0;
     left: 0;
-    z-index: 100;
+    right: 0;
+    z-index: 101;
+    height: 60px;
+    box-sizing: border-box;
 }
 
-.bem-sidebar__brand {
-    font-size: 1.5rem;
+.bem-topbar__left {
+    display: flex;
+    align-items: center;
+    gap: var(--bem-spacing-md, 16px);
+}
+
+.bem-topbar__brand {
+    font-size: 1.25rem;
     font-weight: 700;
     color: #2dd4bf;
     text-decoration: none;
-    margin-bottom: var(--bem-spacing-xl);
+    letter-spacing: -0.025em;
+}
+
+.bem-btn-hamburguer {
+    background: none;
+    border: none;
+    color: #f1f5f9;
+    font-size: 1.5rem;
+    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: var(--bem-spacing-sm);
+    padding: 4px;
+    transition: color 0.2s ease;
+}
+
+.bem-btn-hamburguer:hover {
+    color: #2dd4bf;
+}
+
+/* BARRA DE PESQUISA NO TOPO */
+.bem-topbar__search {
+    flex-grow: 1;
+    max-width: 380px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.bem-topbar__search .bem-form__input {
+    background-color: #0f172a;
+    border: 1px solid #334155;
+    color: #f1f5f9;
+    padding: 8px 16px;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease;
+}
+
+.bem-topbar__search .bem-form__input:focus {
+    outline: none;
+    border-color: #2dd4bf;
+}
+
+/* ==========================================================================
+   BARRA LATERAL RETRÁTIL (SIDEBAR)
+   ========================================================================== */
+.bem-sidebar {
+    width: 260px;
+    background-color: #111827;
+    border-right: 1px solid #334155;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    left: -260px;
+    z-index: 100;
+    transition: left 0.25s ease-in-out;
+    box-sizing: border-box;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.bem-sidebar--aberto {
+    left: 0;
 }
 
 .bem-sidebar__menu {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: var(--bem-spacing-md);
+    gap: 8px;
+    padding: 0;
+    margin: 0;
 }
 
 .bem-sidebar__link {
     text-decoration: none;
     color: #94a3b8;
-    padding: var(--bem-spacing-sm) var(--bem-spacing-md);
-    border-radius: var(--bem-radius-md);
+    padding: 10px 16px;
+    border-radius: 6px;
     transition: all 0.2s ease;
     display: block;
+    font-size: 0.95rem;
 }
 
 .bem-sidebar__link:hover {
-    background-color: #334155;
+    background-color: #1e293b;
     color: #2dd4bf;
 }
 
+/* ==========================================================================
+   CONTAINER PRINCIPAL E GRIDS RESPONSIVOS
+   ========================================================================== */
 #app {
-    margin-left: 260px;
-    width: calc(100% - 260px);
-    min-height: 100vh;
+    margin-top: 60px;
+    width: 100%;
+    min-height: calc(100vh - 60px);
+    padding: 32px 24px;
+    box-sizing: border-box;
 }
 
-@media(max-width: 768px) {
-    body { flex-direction: column; }
-    .bem-sidebar { position: relative; width: 100%; height: auto; }
-    #app { margin-left: 0; width: 100%; }
+.bem-grid-auto {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 16px;
+}
+
+/* ==========================================================================
+   COMPONENTES VISUAIS: CARDS (ESTILO STREAMING)
+   ========================================================================== */
+.bem-card {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.bem-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    border-color: #2dd4bf;
+}
+
+.bem-card__image {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.bem-card__body {
+    padding: 16px;
+    flex-grow: 1;
+}
+
+.bem-card__title {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+    color: #f1f5f9;
+    font-weight: 600;
+}
+
+/* UTILITÁRIOS DE TEXTO */
+.bem-text-primary { color: #2dd4bf; }
+.bem-text-secondary { color: #38bdf8; }
+.bem-text-muted-util {
+    color: #94a3b8;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    margin: 0;
+}
+
+.bem-text-2xl { font-size: 1.5rem; }
+.bem-text-3xl { font-size: 1.875rem; }
+.bem-font-bold { font-weight: 700; }
+
+.bem-mt-sm { margin-top: 8px; }
+.bem-mt-md { margin-top: 16px; }
+.bem-mt-lg { margin-top: 24px; }
+.bem-mt-xl { margin-top: 32px; }
+
+.bem-mb-sm { margin-bottom: 8px; }
+.bem-mb-md { margin-bottom: 16px; }
+.bem-mb-xl { margin-bottom: 32px; }
+
+.bem-p-md { padding: 16px; }
+.bem-p-xl { padding: 32px; }
+
+.bem-border-top-primary {
+    border-top: 4px solid #2dd4bf;
+}
+
+/* ==========================================================================
+   COMPONENTES VISUAIS: BOTÕES E ALERTAS
+   ========================================================================== */
+.bem-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    border: none;
+}
+
+.bem-btn--primary {
+    background-color: #2dd4bf;
+    color: #0f172a;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+}
+
+.bem-btn--primary:hover {
+    background-color: #14b8a6;
+}
+
+.bem-btn--lg {
+    padding: 12px 24px;
+    font-size: 1rem;
+}
+
+
+.bem-alert {
+    background-color: #1e293b;
+    border-left: 4px solid #38bdf8;
+    padding: 16px;
+    border-radius: 0 8px 8px 0;
+    margin-top: 24px;
+}
+
+.bem-alert__title {
+    font-weight: 700;
+    color: #38bdf8;
+    margin: 0 0 4px 0;
+}
+
+.bem-alert__message {
+    color: #94a3b8;
+    font-size: 0.875rem;
+    margin: 0;
 }

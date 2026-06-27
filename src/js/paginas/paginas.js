@@ -1,4 +1,5 @@
 import home from './home.js';
-import { busca, inicializarBuscaFilmes } from './busca.js';
+import series from './series.js';
+import { filmes, inicializarFilmes } from './filmes.js';
 
-export { home, busca, inicializarBuscaFilmes };
+export { home, series, filmes, inicializarFilmes };

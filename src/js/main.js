@@ -1,12 +1,12 @@
-import navbar from "./components/navbar/navbar.js";
-import roteador from "./components/rotas/rotas.js";
+import navbar from "/src/js/componentes/navbar/navbar.js";
+import rotas from "/src/js/componentes/rotas/rotas.js";
 
-navbar(roteador);
+navbar(rotas);
 
 const app = document.getElementById('app');
 const mapaDeRotas = {};
 
-for (const rota of roteador) {
+for (const rota of rotas) {
     mapaDeRotas[rota.url] = rota;
 }
 
