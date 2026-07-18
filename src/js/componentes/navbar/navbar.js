@@ -5,12 +5,12 @@ function navbar(item_menu) {
         <header class="bem-topbar">
             <div class="bem-topbar__left">
                 <button id="btnMenu" class="bem-btn-hamburguer">☰</button>
-                <a href="#inicio" class="bem-topbar__brand">CineBusca </a>
+                <a href="#inicio" class="bem-topbar__brand">CineBusca 🎬</a>
             </div>
             
-            <!-- BARRA DE PESQUISA CENTRALIZADA NO CABEÇALHO -->
+            <!-- BARRA DE PESQUISA CENTRALIZADA NO CABEÇALHO (Removido o disabled) -->
             <div class="bem-topbar__search">
-                <input type="text" id="inputPesquisaGlobal" placeholder="Pesquisar filmes ou séries..." class="bem-form__input" disabled>
+                <input type="text" id="inputPesquisaGlobal" placeholder="Pesquisar filmes ou séries..." class="bem-form__input">
             </div>
         </header>
         
@@ -28,6 +28,7 @@ function navbar(item_menu) {
         </aside>
     `;
 
+    // --- LÓGICA DO MENU HAMBÚRGUER ---
     const btnMenu = document.getElementById('btnMenu');
     const sidebarMenu = document.getElementById('sidebarMenu');
 
@@ -39,6 +40,25 @@ function navbar(item_menu) {
     for (let i = 0; i < links.length; i++) {
         links[i].addEventListener('click', () => {
             sidebarMenu.classList.remove('bem-sidebar--aberto');
+        });
+    }
+
+    // --- LÓGICA DO CAMPO DE PESQUISA ADICIONADA AQUI ---
+    const inputPesquisaGlobal = document.getElementById('inputPesquisaGlobal');
+
+    if (inputPesquisaGlobal) {
+        inputPesquisaGlobal.addEventListener('keyup', (evento) => {
+            if (evento.key === 'Enter') {
+                const termo = inputPesquisaGlobal.value.trim();
+                
+                if (termo) {
+                    // Envia o usuário para a página de catálogo com o termo na URL
+                    window.location.hash = `#catalogo?busca=${encodeURIComponent(termo)}`;
+                } else {
+                    // Se o usuário limpar o campo e der Enter, recarrega o catálogo limpo
+                    window.location.hash = '#catalogo';
+                }
+            }
         });
     }
 }
