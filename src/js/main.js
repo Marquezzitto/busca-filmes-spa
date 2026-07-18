@@ -18,8 +18,6 @@ window.addEventListener("hashchange", () => {
     render();
 });
 
-const rota404 = { pagina: () => '<div class="bem-alert bem-alert--danger">Página não encontrada 404</div>' };
-
 function render() {
     const rotaAtual = mapaDeRotas[hash] || rota404;
     app.innerHTML = rotaAtual.pagina();
