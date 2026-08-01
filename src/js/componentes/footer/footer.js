@@ -1,10 +1,12 @@
-export function renderFooter() {
-  const containerFooter = document.getElementById('footer');
-  if (!containerFooter) return;
+export function footer() {
+  const container = document.getElementById('footer');
+  if (!container) return;
 
-  containerFooter.innerHTML = `
-    <footer class="footer">
-      <p class="footer__text">&copy; 2026 BuscaFilmes SPA — Filmes e Séries</p>
+  container.innerHTML = `
+    <footer class="bem-footer">
+      <p>&copy; 2026 BuscaFilmes & Séries SPA — Vanilla JS</p>
     </footer>
   `;
 }
+
+export default footer;

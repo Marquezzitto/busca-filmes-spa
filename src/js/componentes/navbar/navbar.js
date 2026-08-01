@@ -1,17 +1,23 @@
-export function renderNavbar(rotas) {
-  const containerNav = document.getElementById('navbar');
-  if (!containerNav) return;
+export function navbar(item_menu) {
+  const container = document.getElementById('navbar');
+  if (!container) return;
 
-  const linksHTML = rotas
-    .map(rota => `<li class="navbar__item"><a href="${rota.url}" class="navbar__link">${rota.label}</a></li>`)
+  const linksHTML = item_menu
+    .map(item => `
+      <li class="bem-navbar__item">
+        <a href="${item.url}" class="bem-navbar__link">${item.label}</a>
+      </li>
+    `)
     .join('');
 
-  containerNav.innerHTML = `
-    <nav class="navbar">
-      <div class="navbar__logo">🎬 BuscaFilmes SPA</div>
-      <ul class="navbar__list">
+  container.innerHTML = `
+    <nav class="bem-navbar">
+      <div class="bem-navbar__brand">🎬 BuscaFilmes SPA</div>
+      <ul class="bem-navbar__menu">
         ${linksHTML}
       </ul>
     </nav>
   `;
 }
+
+export default navbar;
