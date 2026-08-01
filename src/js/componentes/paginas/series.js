@@ -1,10 +1,7 @@
 const seriesData = [
   { id: 1, titulo: 'Stranger Things', temporadas: '4', genero: 'Ficção / Mistério', icone: '📺', nota: '8.7' },
   { id: 2, titulo: 'Breaking Bad', temporadas: '5', genero: 'Drama / Crime', icone: '🧪', nota: '9.5' },
-  { id: 3, titulo: 'The Crown', temporadas: '6', genero: 'Drama Histórico', icone: '👑', nota: '8.6' },
-  { id: 4, titulo: 'Dark', temporadas: '3', genero: 'Ficção / Suspense', icone: '⏳', nota: '8.7' },
-  { id: 5, titulo: 'The Office', temporadas: '9', genero: 'Comédia', icone: '💼', nota: '9.0' },
-  { id: 6, titulo: 'Game of Thrones', temporadas: '8', genero: 'Fantasia / Drama', icone: '🐉', nota: '9.2' }
+  { id: 3, titulo: 'Dark', temporadas: '3', genero: 'Ficção / Suspense', icone: '⏳', nota: '8.7' }
 ];
 
 async function series(app) {

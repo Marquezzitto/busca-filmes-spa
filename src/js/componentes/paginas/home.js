@@ -2,7 +2,7 @@ async function home(app) {
   app.innerHTML = `
     <section class="pagina">
       <h1 class="pagina__titulo">Bem-vindo ao BuscaFilmes SPA</h1>
-      <p class="pagina__descricao">Sua plataforma para explorar filmes e séries locais.</p>
+      <p class="pagina__descricao">Sua plataforma para explorar filmes e séries.</p>
 
       <div class="bem-grid-auto">
         <div class="bem-card">

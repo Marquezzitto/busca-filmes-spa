@@ -2,9 +2,7 @@ const filmesData = [
   { id: 1, titulo: 'Inception', ano: '2010', genero: 'Ficção Científica', icone: '🎬', nota: '8.8' },
   { id: 2, titulo: 'Interstellar', ano: '2014', genero: 'Ficção Científica', icone: '🚀', nota: '8.7' },
   { id: 3, titulo: 'The Dark Knight', ano: '2008', genero: 'Ação / Crime', icone: '🦇', nota: '9.0' },
-  { id: 4, titulo: 'Matrix', ano: '1999', genero: 'Ação / Ficção', icone: '🕶️', nota: '8.7' },
-  { id: 5, titulo: 'Gladiador', ano: '2000', genero: 'Ação / Drama', icone: '⚔️', nota: '8.5' },
-  { id: 6, titulo: 'Avatar', ano: '2009', genero: 'Ficção / Aventura', icone: '🌌', nota: '7.9' }
+  { id: 4, titulo: 'Matrix', ano: '1999', genero: 'Ação / Ficção', icone: '🕶️', nota: '8.7' }
 ];
 
 async function filmes(app) {
