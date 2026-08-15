@@ -1,7 +1,7 @@
 // src/js/componentes/paginas/series.js
 import { buscarMidiaAPI, obterPorGenero } from '../services/api.js';
 
-// 🌟 LISTA DE ABSOLUTAMENTE TODOS OS GÊNEROS OFICIAIS DE SÉRIES DO TMDB
+// Lista de todos os gêneros oficiais de séries do TMDB
 const TODOS_GENEROS_SERIES = [
   { id: 'destaque', nome: 'Séries em Destaque' },
   { id: 10759, nome: 'Ação e Aventura' },
@@ -22,29 +22,21 @@ const TODOS_GENEROS_SERIES = [
   { id: 37, nome: 'Faroeste' }
 ];
 
-// Monitora de forma independente qual página da API está carregada em cada gênero de série
-const paginasPorGeneroSeries = {};
-
 async function series(app) {
-  // Inicializa o controle de páginas para cada gênero de série
-  TODOS_GENEROS_SERIES.forEach(g => {
-    paginasPorGeneroSeries[g.id] = 1;
-  });
-
   app.innerHTML = `
-    <section class="pagina">
-      <h1 class="pagina__titulo">Catálogo de Séries</h1>
-      <p class="pagina__descricao">Descubra novos animes, mistérios, dramas e reality shows do mundo.</p>
+    <section class="container my-6 px-4">
+      <h1 class="title is-2 has-text-white mb-2" style="font-weight: 800; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Catálogo de Séries</h1>
+      <p class="subtitle is-6 has-text-grey mb-6">Acompanhe suas séries, animes e novelas preferidas por categorias.</p>
       
-      <!-- Caixa de Busca (Pesquisa em todo o catálogo ao digitar) -->
-      <div class="busca-box mb-6">
-        <input type="text" id="input-serie" class="input" placeholder="Digite o nome da série para buscar...">
-        <button id="btn-buscar-serie" class="btn">Buscar</button>
+      <!-- Caixa de Busca -->
+      <div class="busca-box mb-6" style="display: flex; gap: 10px; max-width: 600px;">
+        <input type="text" id="input-serie" class="input is-rounded" placeholder="Digite o nome da série para buscar...">
+        <button id="btn-buscar-serie" class="button is-link is-rounded">Buscar</button>
       </div>
 
-      <!-- Container das Seções de Gêneros de Séries -->
+      <!-- Container de Fileiras de Gêneros (Estilo Netflix) -->
       <div id="secoes-series-container" class="secoes-verticais-container">
-        <!-- Estruturas de gêneros serão injetadas aqui -->
+        <!-- Estruturas de gêneros serão injetadas aqui via JS -->
       </div>
     </section>
   `;
@@ -54,7 +46,7 @@ async function series(app) {
   // Carrega todas as seções de séries verticalmente
   carregarSecoesSeries();
   
-  // Ativa a busca por digitação escrita
+  // Ativa a barra de busca por digitação escrita
   ativarBuscaEscritaSeries();
 }
 
@@ -62,24 +54,27 @@ async function carregarSecoesSeries() {
   const container = document.getElementById('secoes-series-container');
   if (!container) return;
 
-  // 1. Cria o esqueleto visual das seções para todos os gêneros
+  // Cria as seções no estilo horizontal
   container.innerHTML = TODOS_GENEROS_SERIES.map(g => `
-    <div class="genero-secao mb-6" id="secao-serie-${g.id}">
-      <h2 class="title is-4 mb-4 has-text-white" style="font-weight: 800; border-left: 4px solid #E50914; padding-left: 10px;">
+    <div class="mb-6" id="secao-serie-${g.id}">
+      <h2 class="title is-4 mb-4 has-text-white" style="font-weight: 800; font-size: 1.5rem; letter-spacing: -0.5px;">
         ${g.nome}
       </h2>
-      <div id="grid-serie-${g.id}" class="bem-grid-auto">
-        <p class="has-text-grey">Carregando catálogo...</p>
+      <div class="netflix-row-container">
+        <div id="row-serie-${g.id}" class="netflix-row">
+          <p class="has-text-grey">Carregando...</p>
+        </div>
       </div>
-      <div class="has-text-centered mt-4">
-        <button class="button is-danger is-outlined btn-ver-mais-serie" data-id="${g.id}">
+      <!-- Botão com controle de estado para expandir/recuar -->
+      <div class="has-text-centered mt-3">
+        <button class="button is-danger is-outlined is-small btn-ver-mais-serie" data-id="${g.id}" data-expandido="false" style="border-radius: 6px; font-weight: bold;">
           Ver Mais ${g.nome}
         </button>
       </div>
     </div>
   `).join('');
 
-  // 2. Preenche cada seção de série com dados da API (Página 1)
+  // Preenche cada fileira de séries (Página 1 inicial com os primeiros 20)
   TODOS_GENEROS_SERIES.forEach(async (g) => {
     let resultados = [];
     if (g.id === 'destaque') {
@@ -87,75 +82,95 @@ async function carregarSecoesSeries() {
     } else {
       resultados = await obterPorGenero('tv', g.id, 1);
     }
-    renderizarSeriesNoGrid(g.id, resultados, false);
+    renderizarSeriesNaFileira(g.id, resultados, false);
   });
 
-  // 3. Ativa o clique dos botões "Ver Mais"
+  // Ativa a lógica dinâmica de "Ver Mais / Ver Menos"
   ativarBotoesVerMaisSeries();
 }
 
-function renderizarSeriesNoGrid(generoId, listaSeries, append = false) {
-  const grid = document.getElementById(`grid-serie-${generoId}`);
-  if (!grid) return;
+function renderizarSeriesNaFileira(generoId, listaSeries, append = false) {
+  const row = document.getElementById(`row-serie-${generoId}`);
+  if (!row) return;
 
   if (!append && listaSeries.length === 0) {
-    grid.innerHTML = '<p class="has-text-grey">Nenhum título encontrado nesta categoria no momento.</p>';
+    row.innerHTML = '<p class="has-text-grey">Nenhum título encontrado.</p>';
     return;
   }
 
   const htmlCards = listaSeries.map(s => `
-    <div class="card card-clicavel bem-card animate-pop" onclick="abrirDetalhes(${s.id}, 'tv')">
-      <div class="card-image-container">
+    <div class="netflix-item" onclick="abrirDetalhes(${s.id}, 'tv')">
+      <div class="netflix-item-card">
         <img src="${s.imagem}" alt="${s.titulo}" loading="lazy" onerror="this.src='https://via.placeholder.com/210x295?text=Sem+Capa'">
-        <div class="card-hover-overlay">
-          <button class="button is-danger is-rounded font-weight-bold">Ver Detalhes</button>
-        </div>
-      </div>
-      <div class="card-content py-4 px-3">
-        <h3 class="title is-6 has-text-white mb-2" style="font-weight: 700; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">
-          ${s.titulo}
-        </h3>
-        <div class="d-flex align-items-center justify-content-between" style="font-size: 0.85rem;">
-          <span style="color: #fbbf24; font-weight: bold;">⭐ ${s.nota}</span>
-          <span class="tag is-dark" style="border-radius: 4px; color: #fff !important;">${s.ano}</span>
+        <div class="netflix-item-hover">
+          <h4 class="title is-6 has-text-white mb-2" style="font-weight: bold; font-size: 0.9rem;">${s.titulo}</h4>
+          <div class="d-flex align-items-center justify-content-between" style="font-size: 0.8rem; width: 100%;">
+            <span style="color: #fbbf24; font-weight: bold;"><i data-lucide="star" style="width:12px; height:12px; fill: #fbbf24; vertical-align: middle;"></i> ${s.nota}</span>
+            <span class="tag is-dark py-1 px-2" style="font-size: 0.75rem; border-radius: 4px; color: #fff !important;">${s.ano}</span>
+          </div>
         </div>
       </div>
     </div>
   `).join('');
 
   if (append) {
-    grid.innerHTML += htmlCards; // Adiciona os novos cards embaixo
+    row.innerHTML += htmlCards; // Adiciona na sequência da fileira horizontal
   } else {
-    grid.innerHTML = htmlCards;
+    row.innerHTML = htmlCards;
   }
+
+  if (typeof lucide !== 'undefined') lucide.createIcons();
 }
 
-function activarBotoesVerMaisSeries() {
+function ativarBotoesVerMaisSeries() {
   const botoes = document.querySelectorAll('.btn-ver-mais-serie');
   botoes.forEach(btn => {
     btn.addEventListener('click', async (e) => {
       const generoId = e.currentTarget.getAttribute('data-id');
-      
-      // Avança a página apenas para essa categoria de séries
-      paginasPorGeneroSeries[generoId] += 1;
-      const proximaPagina = paginasPorGeneroSeries[generoId];
+      const estaExpandido = e.currentTarget.getAttribute('data-expandido') === 'true';
+      const gObj = TODOS_GENEROS_SERIES.find(g => g.id.toString() === generoId.toString());
+      const nomeGenero = gObj ? gObj.nome : '';
+      const row = document.getElementById(`row-serie-${generoId}`);
+      if (!row) return;
 
-      e.currentTarget.classList.add('is-loading');
+      if (!estaExpandido) {
+        // 🚀 VER MAIS: Carrega as 20 séries extras da página 2 e adiciona no final
+        e.currentTarget.classList.add('is-loading');
+        
+        try {
+          let novasSeries = [];
+          if (generoId === 'destaque') {
+            novasSeries = await buscarMidiaAPI('', 'tv', 2);
+          } else {
+            novasSeries = await obterPorGenero('tv', generoId, 2);
+          }
 
-      let novasSeries = [];
-      if (generoId === 'destaque') {
-        novasSeries = await buscarMidiaAPI('', 'tv', proximaPagina);
+          if (novasSeries && novasSeries.length > 0) {
+            renderizarSeriesNaFileira(generoId, novasSeries, true); // append = true
+            e.currentTarget.setAttribute('data-expandido', 'true');
+            e.currentTarget.innerHTML = `Ver Menos ${nomeGenero}`;
+          }
+        } catch (error) {
+          console.error("Erro ao carregar mais séries:", error);
+        }
+        
+        e.currentTarget.classList.remove('is-loading');
       } else {
-        novasSeries = await obterPorGenero('tv', generoId, proximaPagina);
+        // 🔙 VER MENOS: Remove todos os itens além dos 20 primeiros instantaneamente
+        const items = row.querySelectorAll('.netflix-item');
+        if (items.length > 20) {
+          for (let i = 20; i < items.length; i++) {
+            items[i].remove();
+          }
+        }
+        e.currentTarget.setAttribute('data-expandido', 'false');
+        e.currentTarget.innerHTML = `Ver Mais ${nomeGenero}`;
       }
-
-      renderizarSeriesNoGrid(generoId, novasSeries, true);
-      e.currentTarget.classList.remove('is-loading');
     });
   });
 }
 
-function activarBuscaEscritaSeries() {
+function ativarBuscaEscritaSeries() {
   const input = document.getElementById('input-serie');
   const btn = document.getElementById('btn-buscar-serie');
   const container = document.getElementById('secoes-series-container');
@@ -165,7 +180,7 @@ function activarBuscaEscritaSeries() {
   const buscarManualSeries = async () => {
     const termo = input.value.trim();
     if (!termo) {
-      carregarSecoesSeries(); // Se limpar, volta ao catálogo de gêneros
+      carregarSecoesSeries();
       return;
     }
 

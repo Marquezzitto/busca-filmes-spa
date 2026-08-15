@@ -1,12 +1,12 @@
 // src/js/componentes/services/api.js
 
 const BASE_URL = 'https://api.themoviedb.org/3';
-const API_KEY = 'f38c9142e052ff3431a9ae316d071481'; // 🌟 Sua chave ativa!
+const API_KEY = 'f38c9142e052ff3431a9ae316d071481'; // Sua chave ativa!
 
 const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 const IMG_ORIGINAL_URL = 'https://image.tmdb.org/t/p/original';
 
-// CAPAS REAIS DE SEGURANÇA (Se a API oscilar, carrega os cartazes originais da API)
+// CAPAS REAIS DE SEGURANÇA
 const FALLBACK_CARROSSEL = [
   {
     id: 27205,
@@ -71,7 +71,7 @@ export async function buscarMidiaAPI(query, tipo = 'movie', pagina = 1) {
     return (data.results || []).map(item => ({
       id: item.id,
       titulo: item.title || item.name || 'Sem título',
-      ano: item.release_date ? item.release_date.split('-')[0] : (item.first_air_date ? item.first_air_date.split('-')[0] : 'N/A'),
+      ano: item.release_date ? item.release_date.split('-') : (item.first_air_date ? item.first_air_date.split('-') : 'N/A'),
       genero: 'Consultar detalhes',
       nota: item.vote_average ? item.vote_average.toFixed(1) : 'N/A',
       imagem: item.poster_path ? `${IMG_BASE_URL}${item.poster_path}` : 'https://via.placeholder.com/210x295?text=Sem+Capa',
@@ -84,7 +84,6 @@ export async function buscarMidiaAPI(query, tipo = 'movie', pagina = 1) {
 }
 
 /**
- * 🌟 PROVÊ O EXPORT 'obterPorGenero' que estava faltando!
  * Busca mídias por Gênero do TMDB com paginação opcional
  */
 export async function obterPorGenero(tipo = 'movie', generoId, pagina = 1) {
@@ -97,7 +96,7 @@ export async function obterPorGenero(tipo = 'movie', generoId, pagina = 1) {
     return (data.results || []).map(item => ({
       id: item.id,
       titulo: item.title || item.name || 'Sem título',
-      ano: item.release_date ? item.release_date.split('-')[0] : (item.first_air_date ? item.first_air_date.split('-')[0] : 'N/A'),
+      ano: item.release_date ? item.release_date.split('-') : (item.first_air_date ? item.first_air_date.split('-') : 'N/A'),
       genero: 'Consultar detalhes',
       nota: item.vote_average ? item.vote_average.toFixed(1) : 'N/A',
       imagem: item.poster_path ? `${IMG_BASE_URL}${item.poster_path}` : 'https://via.placeholder.com/210x295?text=Sem+Capa',
@@ -185,7 +184,7 @@ function formatarListaHome(lista, padraoTipo) {
     return {
       id: item.id,
       titulo: item.title || item.name,
-      ano: item.release_date ? item.release_date.split('-')[0] : (item.first_air_date ? item.first_air_date.split('-')[0] : 'N/A'),
+      ano: item.release_date ? item.release_date.split('-') : (item.first_air_date ? item.first_air_date.split('-') : 'N/A'),
       nota: item.vote_average ? item.vote_average.toFixed(1) : 'N/A',
       imagem: item.poster_path ? `${IMG_BASE_URL}${item.poster_path}` : 'https://via.placeholder.com/210x295?text=Sem+Capa',
       tipo: tipoItem
@@ -197,61 +196,6 @@ function formatarListaHome(lista, padraoTipo) {
  * Busca detalhes completos do título ativo
  */
 export async function obterDetalhesMidia(id, tipo = 'movie') {
-  if (id === 27205) {
-    return {
-      id: 27205,
-      titulo: "A Origem (Inception)",
-      sinopse: "Dom Cobb é um de seus ladrões mais habilidosos do mundo, especializado em extrair segredos valiosos do subconsciente durante o estado de sonho. Agora, ele tem a chance de redimir sua vida se conseguir realizar o impossível.",
-      ano: ["2010"],
-      genero: "Ficção Científica, Ação, Suspense",
-      nota: "8.8",
-      imagem: "https://image.tmdb.org/t/p/original/s3038gZgBlFS7g7D46860gqh9S8.jpg",
-      atores: "Leonardo DiCaprio, Joseph Gordon-Levitt, Elliot Page, Tom Hardy",
-      idioma: "EN",
-      status: "Lançado",
-      duracao: "148 min",
-      emissora: "Warner Bros. Pictures",
-      siteOficial: null,
-      youtubeKey: "YoHD9XEInc0"
-    };
-  }
-  if (id === 157336) {
-    return {
-      id: 157336,
-      titulo: "Interestelar (Interstellar)",
-      sinopse: "As reservas naturais da Terra estão se esgotando. Um grupo de astronautas recebe a missão de verificar possíveis planetas para receberem a população mundial, possibilitando a sobrevivência da espécie.",
-      ano: ["2014"],
-      genero: "Ficção Científica, Drama, Aventura",
-      nota: "8.6",
-      imagem: "https://image.tmdb.org/t/p/original/xJHbZ7CgN76v7v6z1S0LpS8oE6z.jpg",
-      atores: "Matthew McConaughey, Anne Hathaway, Jessica Chastain, Michael Caine",
-      idioma: "EN",
-      status: "Lançado",
-      duracao: "169 min",
-      emissora: "Paramount Pictures",
-      siteOficial: null,
-      youtubeKey: "zSWdZVtXT7E"
-    };
-  }
-  if (id === 155) {
-    return {
-      id: 155,
-      titulo: "Batman: O Cavaleiro das Trevas",
-      sinopse: "Com a ajuda de Jim Gordon e Harvey Dent, Batman tem mantido a ordem em Gotham. Mas um jovem e brilhante criminoso conhecido como Coringa chega para espalhar o caos e testar os limites do herói.",
-      ano: ["2008"],
-      genero: "Ação, Crime, Drama",
-      nota: "9.0",
-      imagem: "https://image.tmdb.org/t/p/original/nMK08g76vY6v7v6z1S0LpS8oE6z.jpg",
-      atores: "Christian Bale, Heath Ledger, Aaron Eckhart, Maggie Gyllenhaal",
-      idioma: "EN",
-      status: "Lançado",
-      duracao: "152 min",
-      emissora: "Warner Bros. Pictures",
-      siteOficial: null,
-      youtubeKey: "g87-A_b466k"
-    };
-  }
-
   try {
     const url = `${BASE_URL}/${tipo}/${id}?api_key=${API_KEY}&language=pt-BR&append_to_response=videos,credits`;
     const response = await fetch(url);
@@ -276,7 +220,7 @@ export async function obterDetalhesMidia(id, tipo = 'movie') {
       id: show.id,
       titulo: show.title || show.name,
       sinopse: show.overview || 'Nenhuma sinopse disponível em português.',
-      ano: show.release_date ? show.release_date.split('-')[0] : (show.first_air_date ? show.first_air_date.split('-')[0] : 'N/A'),
+      ano: show.release_date ? show.release_date.split('-') : (show.first_air_date ? show.first_air_date.split('-') : 'N/A'),
       genero: show.genres && show.genres.length > 0 ? show.genres.map(g => g.name).join(', ') : 'Gênero não informado',
       nota: show.vote_average ? show.vote_average.toFixed(1) : 'N/A',
       imagem: show.poster_path ? `${IMG_ORIGINAL_URL}${show.poster_path}` : 'https://via.placeholder.com/210x295?text=Sem+Capa',
