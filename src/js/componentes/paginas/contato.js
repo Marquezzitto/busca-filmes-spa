@@ -2,6 +2,7 @@ async function contato(app) {
   app.innerHTML = `
     <section class="pagina">
       <h1 class="pagina__titulo">Contato</h1>
+      <p class="pagina__descricao">Envie uma mensagem para a nossa equipe.</p>
       <form id="formulario-contato" class="form">
         <div class="form__grupo">
           <label for="nome">Nome:</label>
@@ -24,7 +25,7 @@ async function contato(app) {
   ativarFormulario();
 }
 
-function ativarFormulario() {
+function activarFormulario() {
   const form = document.getElementById('formulario-contato');
   const feedback = document.getElementById('feedback-contato');
 
@@ -34,7 +35,7 @@ function ativarFormulario() {
       const nome = document.getElementById('nome').value;
 
       if (feedback) {
-        feedback.innerHTML = `<p class="mensagem-sucesso">Obrigado pelo contato, ${nome}! Sua mensagem foi registrada.</p>`;
+        feedback.innerHTML = `<p class="mensagem-sucesso">Obrigado pelo contato, ${nome}! Sua mensagem foi registrada com sucesso.</p>`;
       }
       form.reset();
     });

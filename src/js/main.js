@@ -1,12 +1,15 @@
 import navbar from "./componentes/navbar/navbar.js";
 import roteador from "./componentes/rotas/rotas.js";
 import footer from "./componentes/footer/footer.js";
+import NaoEncontrado from "./paginas/NaoEncontrado.js";
 
+// Inicializa os componentes globais
 navbar(roteador);
 footer();
 
 const app = document.getElementById('app');
 
+// Transforma o array de rotas em um mapa chave-valor para busca rápida
 const mapaDeRotas = {};
 for (const rota of roteador) {
   mapaDeRotas[rota.url] = rota;
@@ -15,25 +18,13 @@ for (const rota of roteador) {
 let hash = window.location.hash || '#home';
 render();
 
+// Monitor de alteração de hash da URL (Roteador SPA)
 window.addEventListener("hashchange", () => {
   hash = window.location.hash;
   render();
 });
 
-const rota404 = {
-  pagina: async (container) => {
-    container.innerHTML = `
-      <section class="pagina">
-        <h1 class="pagina__titulo">404 - Página Não Encontrada</h1>
-        <p class="pagina__descricao">A rota informada não foi localizada.</p>
-        <br>
-        <a href="#home" class="btn">Voltar ao Início</a>
-      </section>
-    `;
-  }
-};
-
 async function render() {
-  const rotaAtual = mapaDeRotas[hash] || rota404;
+  const rotaAtual = mapaDeRotas[hash] || NaoEncontrado;
   await rotaAtual.pagina(app);
 }
