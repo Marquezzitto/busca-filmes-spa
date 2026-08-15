@@ -1,32 +1,32 @@
 // src/js/componentes/services/api.js
 
 const BASE_URL = 'https://api.themoviedb.org/3';
-const API_KEY = 'f38c9142e052ff3431a9ae316d071481'; // 🌟 Sua chave ativa do TMDB!
+const API_KEY = 'f38c9142e052ff3431a9ae316d071481'; // 🌟 Sua chave ativa!
 
 const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500';
 const IMG_ORIGINAL_URL = 'https://image.tmdb.org/t/p/original';
 
-// 🎬 CAPAS REAIS DE SEGURANÇA (Se a API oscilar, carrega os cartazes originais da API e NUNCA imagens genéricas!)
+// CAPAS REAIS DE SEGURANÇA (Se a API oscilar, carrega os cartazes originais da API)
 const FALLBACK_CARROSSEL = [
   {
     id: 27205,
     titulo: "A Origem (Inception)",
     sinopse: "Dom Cobb é um ladrão habilidoso que rouba segredos valiosos do subconsciente durante o estado de sonho. Agora, ele tem a chance de redimir sua vida se conseguir realizar o impossível.",
-    imagemFundo: "https://image.tmdb.org/t/p/original/s3038gZgBlFS7g7D46860gqh9S8.jpg", // Imagem oficial do TMDB
+    imagemFundo: "https://image.tmdb.org/t/p/original/s3038gZgBlFS7g7D46860gqh9S8.jpg",
     nota: "8.8"
   },
   {
     id: 157336,
     titulo: "Interestelar (Interstellar)",
     sinopse: "As reservas naturais da Terra estão se esgotando. Um grupo de astronautas recebe a missão de verificar possíveis planetas para receberem a população mundial, possibilitando a sobrevivência da espécie.",
-    imagemFundo: "https://image.tmdb.org/t/p/original/xJHbZ7CgN76v7v6z1S0LpS8oE6z.jpg", // Imagem oficial do TMDB
+    imagemFundo: "https://image.tmdb.org/t/p/original/xJHbZ7CgN76v7v6z1S0LpS8oE6z.jpg",
     nota: "8.6"
   },
   {
     id: 155,
     titulo: "Batman: O Cavaleiro das Trevas",
     sinopse: "Com a ajuda de Jim Gordon e Harvey Dent, Batman tem mantido a ordem em Gotham. Mas um jovem e brilhante criminoso conhecido como Coringa chega para espalhar o caos e testar os limites do herói.",
-    imagemFundo: "https://image.tmdb.org/t/p/original/nMK08g76vY6v7v6z1S0LpS8oE6z.jpg", // Imagem oficial do TMDB
+    imagemFundo: "https://image.tmdb.org/t/p/original/nMK08g76vY6v7v6z1S0LpS8oE6z.jpg",
     nota: "9.0"
   }
 ];
@@ -51,17 +51,17 @@ export function normalizarBusca(texto) {
 }
 
 /**
- * Busca mídias gerais na API do TMDB (Filmes ou Séries)
+ * Busca mídias gerais na API do TMDB com paginação opcional
  */
-export async function buscarMidiaAPI(query, tipo = 'movie') {
+export async function buscarMidiaAPI(query, tipo = 'movie', pagina = 1) {
   try {
     let url;
     const queryTratada = normalizarBusca(query);
 
     if (!queryTratada) {
-      url = `${BASE_URL}/trending/${tipo}/day?api_key=${API_KEY}&language=pt-BR`;
+      url = `${BASE_URL}/trending/${tipo}/day?api_key=${API_KEY}&language=pt-BR&page=${pagina}`;
     } else {
-      url = `${BASE_URL}/search/${tipo}?api_key=${API_KEY}&query=${encodeURIComponent(queryTratada)}&language=pt-BR&include_adult=false`;
+      url = `${BASE_URL}/search/${tipo}?api_key=${API_KEY}&query=${encodeURIComponent(queryTratada)}&language=pt-BR&include_adult=false&page=${pagina}`;
     }
 
     const response = await fetch(url);
@@ -75,10 +75,37 @@ export async function buscarMidiaAPI(query, tipo = 'movie') {
       genero: 'Consultar detalhes',
       nota: item.vote_average ? item.vote_average.toFixed(1) : 'N/A',
       imagem: item.poster_path ? `${IMG_BASE_URL}${item.poster_path}` : 'https://via.placeholder.com/210x295?text=Sem+Capa',
+      tipo: tipo
     }));
   } catch (error) {
     console.error('Erro ao buscar mídias:', error);
-    return FALLBACK_ROW;
+    return FALLBACK_ROW.filter(item => item.tipo === tipo);
+  }
+}
+
+/**
+ * 🌟 PROVÊ O EXPORT 'obterPorGenero' que estava faltando!
+ * Busca mídias por Gênero do TMDB com paginação opcional
+ */
+export async function obterPorGenero(tipo = 'movie', generoId, pagina = 1) {
+  try {
+    const url = `${BASE_URL}/discover/${tipo}?api_key=${API_KEY}&with_genres=${generoId}&language=pt-BR&sort_by=popularity.desc&page=${pagina}`;
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Erro ao carregar gêneros.");
+    const data = await response.json();
+
+    return (data.results || []).map(item => ({
+      id: item.id,
+      titulo: item.title || item.name || 'Sem título',
+      ano: item.release_date ? item.release_date.split('-')[0] : (item.first_air_date ? item.first_air_date.split('-')[0] : 'N/A'),
+      genero: 'Consultar detalhes',
+      nota: item.vote_average ? item.vote_average.toFixed(1) : 'N/A',
+      imagem: item.poster_path ? `${IMG_BASE_URL}${item.poster_path}` : 'https://via.placeholder.com/210x295?text=Sem+Capa',
+      tipo: tipo
+    }));
+  } catch (error) {
+    console.error("Erro ao buscar gênero:", error);
+    return [];
   }
 }
 
@@ -101,7 +128,7 @@ export async function obterDestaquesCarrossel() {
       nota: item.vote_average ? item.vote_average.toFixed(1) : 'N/A'
     }));
   } catch (e) {
-    console.warn("Conexão instável, ativando carrossel local de contingência com pôsteres reais...", e);
+    console.warn("Conexão instável, usando carrossel local de contingência...", e);
     return FALLBACK_CARROSSEL;
   }
 }
@@ -148,7 +175,7 @@ export async function obterMelhoresSeries() {
   }
 }
 
-// Auxiliar para formatar os dados da Home e blindar contra tipos incompatíveis
+// Auxiliar para formatar os dados da Home
 function formatarListaHome(lista, padraoTipo) {
   return lista.slice(0, 15).map(item => {
     let tipoItem = item.media_type || padraoTipo;
@@ -158,7 +185,7 @@ function formatarListaHome(lista, padraoTipo) {
     return {
       id: item.id,
       titulo: item.title || item.name,
-      ano: item.release_date ? item.release_date.split('-')[0] : (item.first_air_date ? item.first_air_date.split('-')[0] : 'N/A'), // 🌟 FIX: Pega apenas o ano [0]
+      ano: item.release_date ? item.release_date.split('-')[0] : (item.first_air_date ? item.first_air_date.split('-')[0] : 'N/A'),
       nota: item.vote_average ? item.vote_average.toFixed(1) : 'N/A',
       imagem: item.poster_path ? `${IMG_BASE_URL}${item.poster_path}` : 'https://via.placeholder.com/210x295?text=Sem+Capa',
       tipo: tipoItem
@@ -170,12 +197,11 @@ function formatarListaHome(lista, padraoTipo) {
  * Busca detalhes completos do título ativo
  */
 export async function obterDetalhesMidia(id, tipo = 'movie') {
-  // Ajuste de segurança para os IDs locais do Fallback (carrega na hora com dados reais)
   if (id === 27205) {
     return {
       id: 27205,
       titulo: "A Origem (Inception)",
-      sinopse: "Dom Cobb é um de seus ladrões mais habilidosos do mundo, especializado em extrair segredos valiosos do subconsciente durante o estado de sono. Agora, ele tem a chance de redimir sua vida se conseguir realizar o impossível.",
+      sinopse: "Dom Cobb é um de seus ladrões mais habilidosos do mundo, especializado em extrair segredos valiosos do subconsciente durante o estado de sonho. Agora, ele tem a chance de redimir sua vida se conseguir realizar o impossível.",
       ano: ["2010"],
       genero: "Ficção Científica, Ação, Suspense",
       nota: "8.8",
