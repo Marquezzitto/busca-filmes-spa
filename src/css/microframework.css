@@ -292,6 +292,8 @@ body.theme-hbo-light .modal-card-body p {
   background: var(--card-bg); color: var(--text-main);
   align-self: flex-start; border-bottom-left-radius: 2px;
   border: 1px solid var(--border-light);
+  /* ... mantenha os estilos que já existem nela ... */
+  white-space: pre-line !important; /* 🌟 Isso força o HTML a respeitar as quebras de linha dos tópicos */
 }
 
 .chatbot-footer {
