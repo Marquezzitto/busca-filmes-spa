@@ -20,7 +20,7 @@ async function buscarMidiaAPI(query) {
     return data.map(item => ({
       id: item.show.id,
       titulo: item.show.name,
-      ano: item.show.premiered ? item.show.premiered.split('-')[0] : 'N/A',
+      ano: item.show.premiered ? item.show.premiered.split('-') : 'N/A',
       genero: item.show.genres && item.show.genres.length > 0 ? item.show.genres.join(', ') : 'Gênero não informado',
       nota: item.show.rating && item.show.rating.average ? `⭐ ${item.show.rating.average}` : 'N/A',
       imagem: item.show.image ? item.show.image.medium : 'https://via.placeholder.com/210x295?text=Sem+Imagem',

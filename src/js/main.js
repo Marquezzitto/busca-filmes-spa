@@ -1,7 +1,7 @@
 import navbar from "./componentes/navbar/navbar.js";
 import roteador from "./componentes/rotas/rotas.js";
 import footer from "./componentes/footer/footer.js";
-import NaoEncontrado from "./paginas/NaoEncontrado.js";
+import NaoEncontrado from "./componentes/paginas/NaoEncontrado.js";
 
 // Inicializa os componentes globais
 navbar(roteador);
@@ -9,7 +9,7 @@ footer();
 
 const app = document.getElementById('app');
 
-// Transforma o array de rotas em um mapa chave-valor para busca rápida
+// Transforma o array de rotas em um mapa de consulta rápida
 const mapaDeRotas = {};
 for (const rota of roteador) {
   mapaDeRotas[rota.url] = rota;
