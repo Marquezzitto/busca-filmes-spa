@@ -1,147 +1,290 @@
+/* microframework.css - Estilo Moderno Cyber-Dark / Glassmorphic */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+:root {
+  --bg-primary: #060913;
+  --bg-secondary: #0f1524;
+  --card-bg: rgba(21, 30, 50, 0.5);
+  --border-light: rgba(255, 255, 255, 0.08);
+  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  --accent-glow: rgba(99, 102, 241, 0.4);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --input-bg: rgba(15, 23, 42, 0.6);
+}
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #121212;
-  color: #ffffff;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.08) 0px, transparent 50%);
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
+/* Navbar (BEM) */
 .bem-navbar {
-  background-color: #1f1f1f;
+  background: rgba(15, 21, 36, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  border-bottom: 2px solid #e50914;
+  padding: 1.2rem 2.5rem;
+  border-bottom: 1px solid var(--border-light);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .bem-navbar__brand {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #e50914;
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .bem-navbar__menu {
   display: flex;
   list-style: none;
-  gap: 1.5rem;
+  gap: 1.8rem;
+  align-items: center;
+}
+
+.bem-navbar__item {
+  display: inline-flex;
 }
 
 .bem-navbar__link {
-  color: #ffffff;
+  color: var(--text-main);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
 }
 
 .bem-navbar__link:hover {
-  color: #e50914;
+  background: rgba(255, 255, 255, 0.05);
+  color: #818cf8;
 }
 
+/* Main Layout */
 main {
   flex: 1;
-  padding: 2rem;
-  max-width: 1000px;
+  padding: 3rem 2rem;
+  max-width: 1100px;
   margin: 0 auto;
   width: 100%;
 }
 
+.pagina {
+  animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 0; transform: translateY(0); }
+}
+
 .pagina__titulo {
+  font-size: 2.2rem;
+  font-weight: 800;
   margin-bottom: 0.5rem;
-  color: #e50914;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .pagina__descricao {
-  margin-bottom: 1.5rem;
-  color: #ccc;
+  margin-bottom: 2.5rem;
+  color: var(--text-muted);
+  font-size: 1.05rem;
 }
 
+/* Busca e Inputs */
 .busca-box, .form {
   display: flex;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
+  gap: 0.8rem;
+  margin-bottom: 2.5rem;
 }
 
 .form {
   flex-direction: column;
   max-width: 500px;
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-light);
+  backdrop-filter: blur(10px);
 }
 
 .form__grupo {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
-  margin-bottom: 1rem;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.form__grupo label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
 }
 
 .input {
-  padding: 0.8rem;
-  border-radius: 4px;
-  border: 1px solid #333;
-  background-color: #222;
-  color: #fff;
-  flex: 1;
+  padding: 0.9rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  background-color: var(--input-bg);
+  color: var(--text-main);
+  font-size: 0.95rem;
+  transition: all 0.25s ease;
+  width: 100%;
 }
 
+.input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.25);
+  background-color: rgba(15, 23, 42, 0.8);
+}
+
+/* Botões Reais (Feedback Físico) */
 .btn {
-  padding: 0.8rem 1.2rem;
-  background-color: #e50914;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
+  padding: 0.9rem 1.6rem;
+  background: var(--accent-gradient);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.95rem;
   cursor: pointer;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s ease;
+  user-select: none;
 }
 
+/* Hover - Elevação e Brilho */
 .btn:hover {
-  background-color: #b20710;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+  filter: brightness(1.1);
 }
 
+/* Active - Feedback Físico (Pressionar para Baixo) */
+.btn:active {
+  transform: translateY(2px) scale(0.97); /* Movimento de clicar e afundar */
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+}
+
+/* Grid de Cards */
 .bem-grid-auto {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 2rem;
 }
 
+/* Glassmorphism Cards */
 .bem-card {
-  background-color: #1f1f1f;
-  padding: 1.5rem;
-  border-radius: 8px;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 1.8rem;
+  border-radius: 16px;
+  border: 1px solid var(--border-light);
   text-align: center;
-  border: 1px solid #2f2f2f;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.bem-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 
+    0 12px 24px rgba(0, 0, 0, 0.4),
+    0 0 15px rgba(99, 102, 241, 0.1);
 }
 
 .bem-card__icone {
   font-size: 3rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  color: #818cf8;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .bem-card__title {
-  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+  color: var(--text-main);
 }
 
+.bem-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.bem-card strong {
+  color: var(--text-main);
+}
+
+/* Footer Moderno */
 .bem-footer {
-  background-color: #1f1f1f;
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-light);
   text-align: center;
-  padding: 1rem;
-  border-top: 1px solid #2f2f2f;
-  color: #777;
+  padding: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: auto;
 }
 
+/* Mensagens de Sucesso e Alertas */
 .mensagem-sucesso {
-  color: #4caf50;
-  margin-top: 1rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  text-align: center;
 }
 
 .mensagem {
   grid-column: 1 / -1;
   text-align: center;
-  color: #aaa;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  padding: 3rem 0;
+}
+
+/* Ajustes de Ícones Lucide */
+.lucide {
+  stroke-width: 2.2;
 }
