@@ -1,290 +1,679 @@
-/* microframework.css - Estilo Moderno Cyber-Dark / Glassmorphic */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* microframework.css - Estilo Premium Netflix / HBO Dark & Bulma Extension */
 
 :root {
-  --bg-primary: #060913;
-  --bg-secondary: #0f1524;
-  --card-bg: rgba(21, 30, 50, 0.5);
-  --border-light: rgba(255, 255, 255, 0.08);
-  --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-  --accent-glow: rgba(99, 102, 241, 0.4);
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --input-bg: rgba(15, 23, 42, 0.6);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  --transition-smooth: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* 🖤 TEMA NETFLIX/HBO DARK (Chumbo de Alto Contraste) */
+body.theme-hbo-dark {
+  --bg-primary: #141414; /* Fundo chumbo original Netflix */
+  --bg-secondary: #181818;
+  --card-bg: #1f1f1f;
+  --border-light: rgba(255, 255, 255, 0.1);
+  --accent-gradient: linear-gradient(135deg, #E50914 0%, #b81d24 100%);
+  --btn-gradient: linear-gradient(135deg, #E50914 0%, #900d12 100%);
+  --text-main: #ffffff; /* Branco absoluto */
+  --text-muted: #cbd5e1; /* Prata ultra claro */
+  --input-bg: #2b2b2b;
+  --navbar-bg: #141414;
+  --shadow-color: rgba(229, 9, 20, 0.4);
+
+  /* Bulma Variables */
+  --bulma-scheme-main: var(--bg-primary);
+  --bulma-text: var(--text-main);
+  --bulma-text-strong: #ffffff;
+  --bulma-title-color: #ffffff;
+  --bulma-subtitle-color: var(--text-muted);
+  --bulma-card-color: var(--text-main);
+  --bulma-card-background-color: var(--card-bg);
+  --bulma-navbar-background-color: var(--navbar-bg);
+  --bulma-navbar-item-color: var(--text-main);
+  --bulma-input-color: #ffffff;
+  --bulma-input-background-color: var(--input-bg);
+  --bulma-input-border-color: var(--border-light);
+}
+
+/* 🤍 TEMA LIGHT */
+body.theme-hbo-light {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --card-bg: #ffffff;
+  --border-light: rgba(0, 0, 0, 0.12);
+  --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --btn-gradient: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  --text-main: #0f172a; 
+  --text-muted: #475569;
+  --input-bg: #ffffff;
+  --navbar-bg: rgba(255, 255, 255, 0.95);
+  --shadow-color: rgba(79, 70, 229, 0.15);
 }
 
 body {
-  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-  background-color: var(--bg-primary);
-  background-image: 
-    radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.08) 0px, transparent 50%);
-  color: var(--text-main);
+  background-color: var(--bg-primary) !important;
+  color: var(--text-main) !important;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  overflow-x: hidden;
+  transition: var(--transition-smooth);
 }
 
-/* Navbar (BEM) */
-.bem-navbar {
-  background: rgba(15, 21, 36, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem 2.5rem;
-  border-bottom: 1px solid var(--border-light);
-  position: sticky;
-  top: 0;
-  z-index: 100;
+/* ==========================================================================
+   🚨 FORÇAMENTO ABSOLUTO DE CONTEXTO ESCURO (HBO/NETFLIX DARK)
+   ========================================================================== */
+body.theme-hbo-dark,
+body.theme-hbo-dark .title,
+body.theme-hbo-dark .subtitle,
+body.theme-hbo-dark .label,
+body.theme-hbo-dark strong,
+body.theme-hbo-dark .navbar-item,
+body.theme-hbo-dark .card-content .title,
+body.theme-hbo-dark .card-content .subtitle,
+body.theme-hbo-dark .card-content strong,
+body.theme-hbo-dark .card-content,
+body.theme-hbo-dark .content,
+body.theme-hbo-dark .content strong,
+body.theme-hbo-dark .modal-card-body,
+body.theme-hbo-dark .modal-card-body strong,
+body.theme-hbo-dark .modal-card-body span,
+body.theme-hbo-dark .modal-card-head,
+body.theme-hbo-dark .modal-card-title {
+  color: #ffffff !important; /* Branco puro no escuro */
 }
 
-.bem-navbar__brand {
-  font-size: 1.5rem;
-  font-weight: 800;
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+body.theme-hbo-dark p,
+body.theme-hbo-dark .text-muted,
+body.theme-hbo-dark .pagina__descricao,
+body.theme-hbo-dark .card-content p,
+body.theme-hbo-dark .content p,
+body.theme-hbo-dark .modal-card-body .content,
+body.theme-hbo-dark .modal-card-body p {
+  color: #cbd5e1 !important; /* Prata de excelente leitura no escuro */
 }
 
-.bem-navbar__menu {
-  display: flex;
-  list-style: none;
-  gap: 1.8rem;
-  align-items: center;
+/* ==========================================================================
+   🚨 FORÇAMENTO ABSOLUTO DE CONTEXTO CLARO (HBO LIGHT)
+   ========================================================================== */
+body.theme-hbo-light,
+body.theme-hbo-light .title,
+body.theme-hbo-light .subtitle,
+body.theme-hbo-light .label,
+body.theme-hbo-light strong,
+body.theme-hbo-light .navbar-item,
+body.theme-hbo-light .card-content .title,
+body.theme-hbo-light .card-content .subtitle,
+body.theme-hbo-light .card-content strong,
+body.theme-hbo-light .content strong,
+body.theme-hbo-light .modal-card-body,
+body.theme-hbo-light .modal-card-body strong,
+body.theme-hbo-light .modal-card-body span,
+body.theme-hbo-light .modal-card-head,
+body.theme-hbo-light .modal-card-title {
+  color: var(--text-main) !important; /* Grafite escuro no claro */
 }
 
-.bem-navbar__item {
-  display: inline-flex;
+body.theme-hbo-light p,
+body.theme-hbo-light .content,
+body.theme-hbo-light .text-muted,
+body.theme-hbo-light .pagina__descricao,
+body.theme-hbo-light .card-content p,
+body.theme-hbo-light .modal-card-body p {
+  color: var(--text-muted) !important;
 }
 
-.bem-navbar__link {
-  color: var(--text-main);
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  padding: 0.5rem 0.8rem;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  transition: all 0.2s ease;
-}
-
-.bem-navbar__link:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: #818cf8;
-}
-
-/* Main Layout */
-main {
-  flex: 1;
-  padding: 3rem 2rem;
-  max-width: 1100px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.pagina {
-  animation: fadeIn 0.4s ease-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 0; transform: translateY(0); }
-}
-
+/* Títulos com Gradiente */
 .pagina__titulo {
-  font-size: 2.2rem;
   font-weight: 800;
-  margin-bottom: 0.5rem;
   background: var(--accent-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem !important;
 }
 
-.pagina__descricao {
-  margin-bottom: 2.5rem;
-  color: var(--text-muted);
-  font-size: 1.05rem;
+/* Navbar */
+.navbar {
+  background: var(--navbar-bg) !important;
+  border-bottom: 1px solid var(--border-light) !important;
+  transition: var(--transition-smooth);
 }
 
-/* Busca e Inputs */
-.busca-box, .form {
-  display: flex;
-  gap: 0.8rem;
-  margin-bottom: 2.5rem;
+.navbar-item:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #E50914 !important;
 }
 
-.form {
-  flex-direction: column;
-  max-width: 500px;
-  background: var(--card-bg);
-  padding: 2rem;
-  border-radius: 12px;
-  border: 1px solid var(--border-light);
-  backdrop-filter: blur(10px);
+/* 🔘 BOTÕES TÁTEIS COM ANIMAÇÃO DE CLICK REAL */
+.button.is-link, .btn {
+  background: var(--btn-gradient) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 15px var(--shadow-color) !important;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, filter 0.2s ease !important;
 }
 
-.form__grupo {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1.2rem;
-}
-
-.form__grupo label {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.input {
-  padding: 0.9rem 1.2rem;
-  border-radius: 8px;
-  border: 1px solid var(--border-light);
-  background-color: var(--input-bg);
-  color: var(--text-main);
-  font-size: 0.95rem;
-  transition: all 0.25s ease;
-  width: 100%;
-}
-
-.input:focus {
-  outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 12px rgba(99, 102, 241, 0.25);
-  background-color: rgba(15, 23, 42, 0.8);
-}
-
-/* Botões Reais (Feedback Físico) */
-.btn {
-  padding: 0.9rem 1.6rem;
-  background: var(--accent-gradient);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
-  transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.2s ease;
-  user-select: none;
-}
-
-/* Hover - Elevação e Brilho */
-.btn:hover {
+.button.is-link:hover, .btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
-  filter: brightness(1.1);
+  box-shadow: 0 6px 20px var(--shadow-color) !important;
+  filter: brightness(1.15);
 }
 
-/* Active - Feedback Físico (Pressionar para Baixo) */
-.btn:active {
-  transform: translateY(2px) scale(0.97); /* Movimento de clicar e afundar */
-  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+.button.is-link:active, .btn:active {
+  transform: translateY(2px) scale(0.96) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Grid de Cards */
-.bem-grid-auto {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 2rem;
+/* Cards de Filmes */
+.card {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--border-light) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3) !important;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
 }
 
-/* Glassmorphism Cards */
-.bem-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 1.8rem;
-  border-radius: 16px;
-  border: 1px solid var(--border-light);
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+.card-clicavel {
+  cursor: pointer;
+}
+
+.card-clicavel:hover {
+  transform: scale(1.04);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5) !important;
+  border-color: #E50914 !important;
+}
+
+/* Overlay no Hover do Card */
+.card-hover-overlay {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.card-clicavel:hover .card-hover-overlay {
+  opacity: 1;
+}
+
+/* Suporte de Imagem Completa (2:3) */
+.card-image-container {
   position: relative;
+  width: 100%;
+  padding-top: 145%;
+  background-color: rgba(0, 0, 0, 0.5);
   overflow: hidden;
 }
 
-.bem-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(99, 102, 241, 0.3);
-  box-shadow: 
-    0 12px 24px rgba(0, 0, 0, 0.4),
-    0 0 15px rgba(99, 102, 241, 0.1);
+.card-image-container img {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  object-fit: contain !important;
+  background-color: transparent;
+  transition: transform 0.3s ease;
 }
 
-.bem-card__icone {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: #818cf8;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+/* 🤖 CHATBOT WIDGET */
+.chatbot-container {
+  position: fixed;
+  bottom: 25px; right: 25px;
+  z-index: 1000;
 }
 
-.bem-card__title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 0.6rem;
-  color: var(--text-main);
+.chatbot-trigger {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: var(--btn-gradient);
+  color: white; border: none; cursor: pointer;
+  display: flex; justify-content: center; align-items: center;
+  box-shadow: 0 8px 24px var(--shadow-color);
+  transition: transform 0.2s ease;
 }
 
-.bem-card p {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  line-height: 1.5;
+.chatbot-trigger:hover { transform: scale(1.08); }
+.pulse-animation { animation: robot-pulse 2s infinite; }
+
+@keyframes robot-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(229, 9, 20, 0.6); }
+  70% { box-shadow: 0 0 0 15px rgba(229, 9, 20, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(229, 9, 20, 0); }
 }
 
-.bem-card strong {
-  color: var(--text-main);
+.chatbot-window {
+  position: absolute; bottom: 80px; right: 0;
+  width: 360px; height: 480px;
+  background: var(--bg-secondary);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  display: flex; flex-direction: column;
+  overflow: hidden; border: 1px solid var(--border-light);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-origin: bottom right;
 }
 
-/* Footer Moderno */
-.bem-footer {
-  background-color: var(--bg-secondary);
+.chatbot-window.is-hidden {
+  transform: scale(0); opacity: 0; pointer-events: none;
+}
+
+.chatbot-header {
+  background: var(--btn-gradient);
+  color: white; padding: 1rem 1.2rem;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.chatbot-header h3 {
+  font-weight: 700; font-size: 1.05rem;
+  display: flex; align-items: center; gap: 0.5rem;
+  color: #fff !important;
+}
+
+.chatbot-messages {
+  flex: 1; padding: 1.2rem; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 0.8rem;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.chat-bubble {
+  max-width: 80%; padding: 0.75rem 1rem;
+  border-radius: 14px; font-size: 0.9rem; line-height: 1.4;
+}
+
+.chat-bubble--user {
+  background: var(--btn-gradient); color: white;
+  align-self: flex-end; border-bottom-right-radius: 2px;
+}
+
+.chat-bubble--bot {
+  background: var(--card-bg); color: var(--text-main);
+  align-self: flex-start; border-bottom-left-radius: 2px;
+  border: 1px solid var(--border-light);
+}
+
+.chatbot-footer {
+  padding: 0.8rem; background: var(--bg-secondary);
   border-top: 1px solid var(--border-light);
-  text-align: center;
-  padding: 1.5rem;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  margin-top: auto;
+  display: flex; gap: 0.5rem;
 }
 
-/* Mensagens de Sucesso e Alertas */
-.mensagem-sucesso {
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.2);
-  color: #34d399;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-top: 1.5rem;
-  text-align: center;
+.spinner { animation: spin-loop 1s linear infinite; }
+@keyframes spin-loop { to { transform: rotate(360deg); } }
+
+.footer {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-muted) !important;
+  border-top: 1px solid var(--border-light) !important;
 }
 
-.mensagem {
-  grid-column: 1 / -1;
-  text-align: center;
-  color: var(--text-muted);
+/* 🎬 MODAL NETFLIX PREMIUM - EXPANDIDO (1050px) */
+.modal-netflix-card {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.8);
+  max-width: 1050px !important; 
+  width: 95% !important;
+  transition: var(--transition-smooth);
+}
+
+.modal-netflix-card .modal-card-head {
+  background-color: var(--bg-secondary) !important;
+  border-bottom: 1px solid var(--border-light) !important;
+  transition: var(--transition-smooth);
+}
+
+.modal-netflix-card .modal-card-title {
+  color: var(--text-main) !important;
+  font-weight: 700 !important;
+  transition: var(--transition-smooth);
+}
+
+.modal-netflix-card .modal-card-body {
+  background-color: var(--bg-secondary) !important;
+  transition: var(--transition-smooth);
+}
+
+/* ESPAÇAMENTO INTELIGENTE ENTRE IMAGEM E TEXTO */
+.modal-netflix-card .column.is-7 {
+  padding: 2rem !important; 
+  transition: var(--transition-smooth);
+}
+
+@media screen and (min-width: 769px) {
+  .modal-netflix-card .column.is-7 {
+    padding: 2.5rem 2.5rem 2.5rem 4.5rem !important; 
+  }
+}
+
+.font-weight-bold {
+  font-weight: 700 !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.flex-column {
+  flex-direction: column !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.align-items-start {
+  align-items: flex-start !important;
+}
+
+.justify-content-center {
+  justify-content: center !important;
+}
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+.is-gapless {
+  gap: 0 !important;
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+.animate-pop {
+  animation: modalPop 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.2) forwards;
+}
+
+@keyframes modalPop {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================================================
+   🌟 CARROSSEL HERO PREMIUM (Widescreen Netflix Style)
+   ========================================================================== */
+.prime-hero-carousel {
+  position: relative;
+  width: 100%;
+  height: 520px; 
+  background-color: #000;
+  overflow: hidden;
+}
+
+.hero-slide {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  background-position: center 20%;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+/* Efeito de fade escuro sobre a imagem de fundo */
+.hero-gradient-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(20, 20, 20, 0.95) 0%,
+    rgba(20, 20, 20, 0.4) 40%,
+    rgba(20, 20, 20, 0) 100%
+  ),
+  linear-gradient(
+    to top,
+    rgba(20, 20, 20, 1) 0%,
+    rgba(20, 20, 20, 0) 25%
+  );
+  z-index: 1;
+}
+
+/* Conteúdo de Texto por cima do Banner */
+.hero-content {
+  position: relative;
+  z-index: 3;
+  max-width: 600px;
+  padding: 0 4rem;
+}
+
+/* 🚨 BLINDAGEM DO CARROSSEL NO TEMA CLARO:
+   Força o conteúdo do carrossel a manter cores claras de alto contraste,
+   mesmo quando o tema claro (theme-hbo-light) estiver ativo no body. */
+.prime-hero-carousel .title,
+.prime-hero-carousel h2,
+.prime-hero-carousel .has-text-white {
+  color: #ffffff !important;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9) !important;
+}
+
+.prime-hero-carousel .subtitle,
+.prime-hero-carousel .has-text-warning {
+  color: #fbbf24 !important; /* Mantém estrela e nota amarela brilhante */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9) !important;
+}
+
+.prime-hero-carousel .hero-overview {
+  color: #e2e8f0 !important; /* Força cinza-prata de excelente contraste */
   font-size: 1.1rem;
-  padding: 3rem 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9) !important;
 }
 
-/* Ajustes de Ícones Lucide */
-.lucide {
-  stroke-width: 2.2;
+.prime-hero-carousel .tag {
+  color: #ffffff !important;
+}
+
+.prime-hero-carousel .carousel-control {
+  color: #ffffff !important;
+}
+
+/* Controles de Próximo e Anterior */
+.carousel-control {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 1.25rem 0.75rem;
+  z-index: 4;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.carousel-control:hover {
+  background: rgba(229, 9, 20, 0.8);
+}
+
+.carousel-control.prev { left: 15px; }
+.carousel-control.next { right: 15px; }
+
+/* Pontinhos de Indicação */
+.carousel-dots {
+  position: absolute;
+  bottom: 25px;
+  right: 4rem;
+  display: flex;
+  gap: 8px;
+  z-index: 4;
+}
+
+.carousel-dots .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.carousel-dots .dot.active {
+  background-color: #E50914;
+}
+
+/* ==========================================================================
+   🍿 ROLAGEM HORIZONTAL SUAVE ESTILO NETFLIX
+   ========================================================================== */
+.netflix-row-container {
+  position: relative;
+  width: 100%;
+}
+
+.netflix-row {
+  display: flex;
+  overflow-x: auto;
+  gap: 15px;
+  padding: 10px 0 25px 0;
+  scroll-behavior: smooth;
+}
+
+/* Ocultar barra de rolagem nativa para acabamento perfeito */
+.netflix-row::-webkit-scrollbar {
+  height: 6px;
+}
+
+.netflix-row::-webkit-scrollbar-thumb {
+  background: rgba(229, 9, 20, 0.4);
+  border-radius: 10px;
+}
+
+.netflix-row::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Card do Item Horizontal */
+.netflix-item {
+  flex: 0 0 175px; 
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.netflix-item-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2/3;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.netflix-item-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Hover no Card */
+.netflix-item:hover {
+  transform: scale(1.08);
+  z-index: 10;
+}
+
+.netflix-item-hover {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0) 100%);
+  padding: 1.5rem 0.8rem 0.8rem 0.8rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.netflix-item:hover .netflix-item-hover {
+  opacity: 1;
+}
+
+/* Responsividade do Carrossel */
+@media screen and (max-width: 768px) {
+  .prime-hero-carousel {
+    height: 380px;
+  }
+  .hero-content {
+    padding: 0 2rem;
+  }
+  .hero-overview {
+    font-size: 0.95rem;
+  }
+  .carousel-dots {
+    right: 2rem;
+  }
+}
+
+/* ==========================================================================
+   🌟 LOGO DINÂMICO PRIMECINE (Troca de cor por tema)
+   ========================================================================== */
+.navbar-brand-logo {
+  font-weight: 900 !important;
+  font-size: 1.45rem !important;
+  transition: var(--transition-smooth);
+  display: flex;
+  align-items: center;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ❤️ COR NO TEMA ESCURO (Fundo Chumbo / Estilo Netflix) */
+body.theme-hbo-dark .navbar-brand-logo {
+  background-image: linear-gradient(135deg, #E50914 0%, #ffffff 100%) !important;
+}
+body.theme-hbo-dark .navbar-brand-logo .brand-icon {
+  color: #E50914 !important; 
+}
+
+/* 💜 COR NO TEMA CLARO */
+body.theme-hbo-light .navbar-brand-logo {
+  background-image: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%) !important;
+}
+body.theme-hbo-light .navbar-brand-logo .brand-icon {
+  color: #4f46e5 !important; 
+}
+
+/* ==========================================================================
+   🚨 CORREÇÃO ABSOLUTA: CARROSSEL SEMPRE CLARO NO TEMA CLARO
+   ========================================================================== */
+body.theme-hbo-light .prime-hero-carousel .title,
+body.theme-hbo-light .prime-hero-carousel h2,
+body.theme-hbo-light .prime-hero-carousel .has-text-white {
+  color: #ffffff !important; /* Força o título a ser branco puro */
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9) !important;
+}
+
+body.theme-hbo-light .prime-hero-carousel .subtitle,
+body.theme-hbo-light .prime-hero-carousel .has-text-warning {
+  color: #fbbf24 !important; /* Força a nota a ser amarela brilhante */
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9) !important;
+}
+
+body.theme-hbo-light .prime-hero-carousel .hero-overview,
+body.theme-hbo-light .prime-hero-carousel p {
+  color: #e2e8f0 !important; /* Força a sinopse a ser prata bem claro e legível */
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.9) !important;
+}
+
+body.theme-hbo-light .prime-hero-carousel .tag {
+  color: #ffffff !important;
+  background-color: #E50914 !important; /* Mantém a tag vermelha com texto branco */
 }
